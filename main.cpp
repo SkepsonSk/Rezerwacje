@@ -9,19 +9,18 @@ struct danePasazera{
 	string znizka;
 };
 
+struct autobus {
+    danePasazera* pasazerowie;
+};
+
 int rezerwacjaMiejsc(unsigned short int a){
 	cout<<"Ile miejsc w busie chcesz zarezerwowac? ";
-	cin >> a;
-	if(a > 0 && a < 9){}
-	else{
-		do{
-			cout<<"Poprosze podac inne, poprawne dane: ";
-			cin>>a;
-			if(a>0 && a<8){
-				break;
-			}
-		}while(!(a>0 && a<9));
-	}
+	do {
+        cin >> a;
+        if (!(a > 0 && a < 9)) {
+            cout << "Liczba pasazerów powinna byæ w przedziale od 0 do 8." << endl;
+        }
+	} while (!(a > 0 && a < 9));
 	return a;
 }
 void wyswietlanieDanych(unsigned short int a, danePasazera *miejsca){
@@ -33,34 +32,35 @@ void wyswietlanieDanych(unsigned short int a, danePasazera *miejsca){
 
 int main(){
 	unsigned short int a;
-	danePasazera *miejsca = new danePasazera[8];
+	autobus bus;
+
+	bus.pasazerowie = new danePasazera[8];
 
 	a=rezerwacjaMiejsc(a);
 
 	for(int i=0; i<a; i++){
 		cout<<"Podaj imie pasazera: ";
 		cin.ignore();
-		getline(cin, miejsca[i].imie);
+		getline(cin, bus.pasazerowie[i].imie);
 		cout<<"Podaj nazwisko pasazera: ";
-		getline(cin, miejsca[i].nazwisko);
+		getline(cin, bus.pasazerowie[i].nazwisko);
 		cout<<"Podaj wiek pasazera: ";
-		cin>>miejsca[i].wiek;
+		cin>>bus.pasazerowie[i].wiek;
 		cout<<endl;
 
-		if(miejsca[i].wiek<0){
+		if(bus.pasazerowie[i].wiek<0){
 			cout<<"Podane zle dane, prosze wprowadzic jeszcze raz."<<endl;
-			cin>>miejsca[i].wiek;
+			cin>>bus.pasazerowie[i].wiek;
 		}
 
-		if(miejsca[i].wiek<18 || miejsca[i].wiek>65){
-			miejsca[i].znizka="TAK";
+		if(bus.pasazerowie[i].wiek<18 || bus.pasazerowie[i].wiek>65){
+			bus.pasazerowie[i].znizka="TAK";
 		}
 		else{
-			miejsca[i].znizka="NIE";
+			bus.pasazerowie[i].znizka="NIE";
 		}
 	}
-	wyswietlanieDanych(a, miejsca);
+	wyswietlanieDanych(a, bus.pasazerowie);
 	cout<<"Pozostalo wolnych miejsc w busie: "<<8-a;
-	delete [] miejsca;
 	return 0;
 }
