@@ -11,17 +11,12 @@ struct danePasazera{
 
 int rezerwacjaMiejsc(unsigned short int a){
 	cout<<"Ile miejsc w busie chcesz zarezerwowac? ";
-	cin >> a;
-	if(a > 0 && a < 9){}
-	else{
-		do{
-			cout<<"Poprosze podac inne, poprawne dane: ";
-			cin>>a;
-			if(a>0 && a<8){
-				break;
-			}
-		}while(!(a>0 && a<9));
-	}
+	do {
+        cin >> a;
+        if (!(a > 0 && a < 9)) {
+            cout << "Liczba pasazerów powinna byæ w przedziale od 0 do 8." << endl;
+        }
+	} while (!(a > 0 && a < 9));
 	return a;
 }
 void wyswietlanieDanych(unsigned short int a, danePasazera *miejsca){
